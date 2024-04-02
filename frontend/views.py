@@ -23,6 +23,7 @@ def get_food_info(request):
         if not api_request.json():
             return HttpResponse(f"Nothing found for {food_query}")
         resp = json.loads(api_request.content)
+        print(api_request.json())
     except Exception as e:
         print(e)
         return HttpResponse(f"oops! There was an error")

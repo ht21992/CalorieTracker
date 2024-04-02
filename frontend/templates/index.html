@@ -25,9 +25,13 @@
                 hx-vals='js:{"query":getFoodInput()}'>
                     {%csrf_token%}
                     <div class="input-group input-group-lg mb-5">
-                        <input id="foodInput" type="text" name="query" class="form-control inputstyle"
-                            placeholder="search for calories in your food..." required>
-                        <button class="btn whoop" type="submit" id="button-addon2">Find calories</button>
+                        <!-- <input id="foodInput" type="text" name="query" class="form-control inputstyle"
+                            placeholder="search for calories in your food..." required> -->
+
+                                <input id="foodInput" type="text" name="query" class="form-control"  placeholder="search for calories in your food..." required aria-label="Type your message here..." aria-describedby="sendButton">
+                                <button class="btn whoop" type="submit" id="button-addon2">Find calories</button>
+
+
                     </div>
                 </form>
                 <div id="foodInfoContainer">
