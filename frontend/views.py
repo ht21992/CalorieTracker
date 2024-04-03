@@ -28,7 +28,7 @@ def get_food_info(request):
             for key in resp[0].keys():
                 if key == 'name':
                     continue
-                total[key] = sum(item[key] for item in resp)
+                total[key] = round(sum(item[key] for item in resp),2)
             resp.append(total)
 
     except Exception as e:
