@@ -1,19 +1,14 @@
-def calculate_value(value, total_cal, nut_name, daily_intake=2000):
-    nutritions = {"fat": 9, "carbohydrate": 4, "protein": 4}
+resp =[{'name': 'beer', 'calories': 43.3, 'serving_size_g': 100.0, 'fat_total_g': 0.0, 'fat_saturated_g': 0.0, 'protein_g': 0.5, 'sodium_mg': 3, 'potassium_mg': 13, 'cholesterol_mg': 0, 'carbohydrates_total_g': 3.6, 'fiber_g': 0.0, 'sugar_g': 0.0}, {'name': 'salt', 'calories': 0.0, 'serving_size_g': 100.0, 'fat_total_g': 0.0, 'fat_saturated_g': 0.0, 'protein_g': 0.0, 'sodium_mg': 38395, 'potassium_mg': 0, 'cholesterol_mg': 0, 'carbohydrates_total_g': 0.0, 'fiber_g': 0.0, 'sugar_g': 0.0}]
 
-    try:
-        calorie_percentage = (value * nutritions[nut_name]) / total_cal * 100
-        for_intake = round((daily_intake * calorie_percentage) / nutritions[nut_name], 2)
-
-        return f"{for_intake}g"
-    except (ValueError, TypeError):
-        return 'NAN'
+total = {'name': 'total'}
+for key in resp[0].keys():
+    if key == 'name':
+        continue
+    total[key] = sum(item[key] for item in resp)
 
 
-value = 0.1  # Total Fat in grams per 100g serving
-total_cal = 15.3  # Total Calories per 100g serving
-nut_name = "fat"  # Nutrient name
-daily_intake = 2000  # Daily calorie intake for calculation
 
-total_fat_intake = calculate_value(value, total_cal, nut_name, daily_intake)
-print(total_fat_intake)
+# total = {'name': 'total', **{key: sum(item[key] for item in resp) for key in resp[0].keys() if key != 'name'}}
+
+
+print(total)

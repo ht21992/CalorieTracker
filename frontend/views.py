@@ -23,7 +23,14 @@ def get_food_info(request):
         if not api_request.json():
             return HttpResponse(f"Nothing found for {food_query}")
         resp = json.loads(api_request.content)
-        print(api_request.json())
+        if len(resp) > 1:
+            total = {'name': 'total'}
+            for key in resp[0].keys():
+                if key == 'name':
+                    continue
+                total[key] = sum(item[key] for item in resp)
+            resp.append(total)
+
     except Exception as e:
         print(e)
         return HttpResponse(f"oops! There was an error")

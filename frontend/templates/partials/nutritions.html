@@ -1,0 +1,270 @@
+{% load static mathfilters humanize %}
+
+<h1 class="mb-3 thick-end" style="line-height: 63px;">{% if nutr.name != "total" %} {{nutr.name | capfirst}} has a total of  {% else %} Total {% endif %} <strong> {{nutr.calories}}
+        Calories</strong></h1>
+<div class="row my-4">
+    <div class="col-lg-6">
+        <section class="nutrition-facts">
+            <header class="nutrition-facts__header">
+                <h3 class="nutrition-facts__title">{{nutr.name | capfirst}}</h3>
+                <h1 class="nutrition-facts__title">Nutrition Facts</h1>
+                <p>Serving Size per {{nutr.serving_size_g}}/Grams
+            </header>
+            <table class="nutrition-facts__table">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="small-info">
+                            Amount Per Serving
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th colspan="2">
+                            <b>Calories</b>
+                        </th>
+                        <td>
+                            {{nutr.calories}}
+                        </td>
+                    </tr>
+                    <tr class="thick-row">
+                        <td colspan="3" class="small-info">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Total Fat</b>
+                        </th>
+                        <td>
+                            <b>{{nutr.fat_total_g}} g</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="blank-cell">
+                        </td>
+                        <th>
+                            Saturated Fat
+                        </th>
+                        <td>
+                            <b>{{nutr.fat_saturated_g}} g</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Cholesterol</b>
+
+                        </th>
+                        <td>
+                            <b>{{nutr.cholesterol_mg}} mg</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Sodium</b>
+
+                        </th>
+                        <td>
+                            <b>{{nutr.sodium_mg}} mg</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Potassium</b>
+                        </th>
+                        <td>
+                            <b>{{nutr.potassium_mg}} mg</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <b>Total Carbohydrate</b>
+                        </th>
+                        <td>
+                            <b>{{nutr.carbohydrates_total_g}} g</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="blank-cell">
+                        </td>
+                        <th>
+                            Fiber
+                        </th>
+                        <td>
+                            <b>{{nutr.fiber_g}} g</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="blank-cell">
+                        </td>
+                        <th>
+                            Sugar
+                        </th>
+                        <td>
+                            <b>{{nutr.sugar_g}} g</b>
+                        </td>
+                    </tr>
+                    <tr class="thick-end">
+                        <th colspan="2">
+                            <b>Protein</b>
+                        </th>
+                        <td>
+                            <b>{{nutr.protein_g}} g</b>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% if nutr.sodium_mg > 1000 %}
+            <p class="caution-info" style="margin-top: 5px;">* This food contains an high amount of sodium. High Sodium
+                causes Sever dehydration and water retention.</p>
+
+            {% endif %}
+            {% if nutr.sugar_g > 100 %}
+            <p class="caution-info"> This food contains an high amount of sugar. Sugar causes insulin spikes and is a
+                no.1
+                cause for Obesity. </p>
+            {% endif %}
+
+
+
+        </section>
+
+
+
+    </div>
+
+    <div class="col-lg-6 ">
+
+        <canvas id="nutritionChart-{{nutr.name}}" width="400" height="400"></canvas>
+        <h4 class="mt-3 mb-4 thick-end" style="line-height: 63px;">To burn {{nutr.calories}} calories you will have to
+        </h4>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="d-flex align-items-center mb-5">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/running.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5> Jog </h5>
+                        <p>you will have to jog for <strong> {{nutr.calories|div:600|mul:60|floatformat:0}} </strong>
+                            Minutes</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-5">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/yoga.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-4">
+                        <h5> Do Power Yoga </h5>
+                        <p>you will have to do Power Yoga for <strong> {{nutr.calories|div:400|mul:60|floatformat:0}}
+                            </strong> Minutes</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-5">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/workout.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-4">
+                        <h5>Get a Gym Workout </h5>
+                        <p>you will have to lift weight for <strong> {{nutr.calories|div:500|mul:60|floatformat:0}}
+                            </strong> Minutes </p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/walking.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-1">
+                        <h5> Go for a Brisk Walk </h5>
+                        <p>you will have to brisk walk for <strong> {{nutr.calories | div:300|mul:60|floatformat:0}}
+                            </strong> Minutes</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+
+                <div class="d-flex align-items-center mb-5">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/basketball.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5>Basketball</h5>
+                        <p>you will have to play basketball for <strong> {{nutr.calories|div:500|mul:60|floatformat:0}} </strong>
+                            Minutes</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-5">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/football.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-4">
+                        <h5>Football</h5>
+                        <p>you will have to play football for <strong> {{nutr.calories|div:600|mul:60|floatformat:0}}
+                            </strong> Minutes</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-5">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/cycling.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-4">
+                        <h5>Cycling</h5>
+                        <p>you will have to cycle for <strong> {{nutr.calories|div:500|mul:60|floatformat:0}}
+                            </strong> Minutes </p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <img src="{% static 'images/swim.png' %}" alt="..." width="30" height="30">
+                    </div>
+                    <div class="flex-grow-1 ms-1">
+                        <h5> Swimming </h5>
+                        <p>you will have to swim for <strong> {{nutr.calories | div:500|mul:60|floatformat:0}}
+                            </strong> Minutes</p>
+                    </div>
+                  </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    var chrt = document.getElementById("nutritionChart-{{nutr.name}}").getContext("2d");
+    var chartId = new Chart(chrt, {
+        type: 'doughnut',
+        data: {
+            labels: ['carbohydrates', 'Cholesterol', 'Saturated fat', 'Total Fat', 'Fiber Content', 'Potassium', 'Protein', 'Sodium', 'Sugar'],
+            datasets: [{
+                data: ['{{ resp.0.carbohydrates_total_g }}',
+                    '{{ resp.0.cholesterol_mg|div:1000 }}',
+                    '{{ resp.0.fat_saturated_g }}',
+                    '{{resp.0.fat_saturated_g }}',
+                    '{{resp.0.fat_total_g }}',
+                    '{{resp.0.potassium_mg|div:1000 }}',
+                    '{{resp.0.protein_g }}',
+                    '{{resp.0.sodium_mg|div:1000 }}',
+                    '{{resp.0.sugar_g }}',],
+                backgroundColor: ['gold', 'aqua', 'pink', 'lightgreen', 'lightblue', 'olive', 'red', 'blue', 'brown'],
+                hoverOffset: 5
+            }],
+        },
+        options: {
+            responsive: true,
+        },
+    });
+
+
+</script>

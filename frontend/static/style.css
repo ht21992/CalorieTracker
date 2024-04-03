@@ -1,6 +1,6 @@
-/* body {
-  background-color: #DFCFBE;
-} */
+body {
+  background-color: #FEFBF6;
+}
 
 .logo {
   width: 200px;
@@ -13,7 +13,7 @@ h1 {
 
 h1 strong {
   font-weight: 600;
-  color: #009B77;
+  color: #8CB9BD;
 }
 
 .inputstyle {
@@ -21,11 +21,15 @@ h1 strong {
 
 }
 
-.whoop {
-  background-color: #45B8AC;
+.btn-search {
+  background-color: #B67352;
   width: 8em;
   font-size: 30px !important;
   color: #ffffff;
+}
+
+.btn-search:hover {
+  background-color: #ECB159;
 }
 
 .caloriescont {
@@ -45,14 +49,14 @@ h1 strong {
 }
 
 .caloriescont h3 {
-  color: #45B8AC;
+  color: #B67352;
   font-size: 2em;
   text-transform: capitalize;
   font-weight: 700;
 }
 
 .caloriescont h5 {
-  color: #45B8AC;
+  color: #B67352;
 }
 
 .servingsize {
@@ -120,7 +124,7 @@ p {
 .caution-info {
   font-size: 0.7rem;
   margin-bottom: 10px;
-  color : rgb(231, 17, 17);
+  color : #ECB159;
 }
 .small-info {
   font-size: 0.7rem;
@@ -159,4 +163,5 @@ p {
 }
 .thin-end {
   border-bottom: 1px solid black;
+
 }
