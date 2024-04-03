@@ -16,9 +16,9 @@ h1 strong {
   color: #8CB9BD;
 }
 
-.inputstyle {
-  padding: 20px !important;
 
+p {
+  margin: 0;
 }
 
 .btn-search {
@@ -32,46 +32,7 @@ h1 strong {
   background-color: #ECB159;
 }
 
-.caloriescont {
-  background-color: #ffffff;
-  padding: 30px;
-}
 
-.caloriescont ul {
-  padding: 0px;
-}
-
-.caloriescont ul li {
-  list-style: none;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #DFCFBE;
-  width: 80%;
-}
-
-.caloriescont h3 {
-  color: #B67352;
-  font-size: 2em;
-  text-transform: capitalize;
-  font-weight: 700;
-}
-
-.caloriescont h5 {
-  color: #B67352;
-}
-
-.servingsize {
-  background-color: #000000;
-  padding: 10px;
-  color: #ffffff;
-}
-
-
-/*  */
-
-
-p {
-  margin: 0;
-}
 .nutrition-facts {
   border: 1px solid black;
   margin: 20px;
