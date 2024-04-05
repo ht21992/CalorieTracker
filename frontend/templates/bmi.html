@@ -1,0 +1,231 @@
+<div class="container">
+    <h3 class="px-4 text-center">BMI Calculator</h3>
+    <div class="row my-3" style="margin-left: 20%;margin-right: 20%;">
+        <div class="col-lg-6 col-sm-12 my-2">
+            <div class="input-group input-group-lg ">
+                <div class="input-group">
+                    <input style="font-size: 12px" id="HeightInput" type="number" class="form-control" value="181"
+                        placeholder="Height" aria-describedby="inputHeightPrepend" required>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-light " style="border: none;" id="inputHeightPrepend">cm</span>
+                    </div>
+                </div>
+            </div>
+
+            <select class="form-select my-2" id="activityLevelSelectBox">
+                <option disabled selected val="-1" >Activity level</option>
+                <option value="0">little or no exercise</option>
+                <option value="1">Lightly active (light exercise/sports 1-2 days/week)</option>
+                <option value="2">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                <option value="3">Very active (hard exercise/sports 6-7 days a week)</option>
+                <option value="4">Extra active (very hard exercise/sports & physical job or 2x training)</option>
+            </select>
+
+            <div class="form-check form-check-inline my-4">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="1" >
+                <label class="form-check-label" for="male" >Male</label>
+              </div>
+              <div class="form-check form-check-inline my-4">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="0" checked>
+                <label class="form-check-label" for="female">Female</label>
+              </div>
+
+
+
+        </div>
+        <div class="col-lg-6 col-sm-12 my-2">
+            <div class="input-group">
+                <input style="font-size: 12px" id="WeightInput" type="number" class="form-control " value="80"
+                    placeholder="Weight" aria-describedby="inputWeightPrepend" required>
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-light" style="border: none;" id="inputWeightPrepend">kg</span>
+                </div>
+            </div>
+            <div class="input-group my-2">
+                <input style="font-size: 12px" id="AgeInput" type="number" class="form-control " value="31"
+                    placeholder="Age" aria-describedby="inputAgePrepend" required>
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-light" style="border: none;" id="inputAgePrepend">year</span>
+                </div>
+            </div>
+            <button style="font-size: 12px !important;max-width: 160;max-height: 50px;float: right;" class="btn btn-outline-success my-3"
+            type="button" hx-trigger="click[calculateBMI()]" hx-target="#status_prediction"
+            hx-post="{% url 'predict_status' %}" hx-vals='js:{"height":getHeight(), "weight":getWeight(),"gender":getGender()}'>Calculate
+            BMI</button>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="container my-3">
+    <h5 id="alert" class="text-center text-danger"></h5>
+    <!-- Here -->
+    <table id="res_table" style="visibility: hidden;" class="nutrition-facts__table mr-3" >
+        <tbody>
+            <tr>
+                <th colspan="2">
+                    <b>Height</b>
+
+                </th>
+                <td>
+                    <b id="userHeight"></b>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <b>Weight</b>
+
+                </th>
+                <td>
+                    <b id="userWeight"></b>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <b>Gender</b>
+                </th>
+                <td>
+                    <b id="userGender"></b>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <b>Status</b>
+                </th>
+                <td>
+                    <b id="status_prediction"></b>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <b>BMR</b>
+                </th>
+                <td>
+                    <b id="bmr_calculation"></b>
+                </td>
+            </tr>
+
+            <tr class="thick-end">
+                <th colspan="2">
+                    <b>BMI</b>
+                </th>
+                <td>
+                    <b id="bmi_calculation"></b>
+                </td>
+            </tr>
+
+            <tr class="thick-end">
+                <th colspan="2">
+                    <b>Daily Intake Calorie</b>
+                </th>
+                <td>
+                    <b id="daily_cal"></b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- To Here -->
+</div>
+
+
+<script>
+
+
+    function getHeight() {
+        return document.getElementById("HeightInput").value;
+    }
+
+    function getWeight() {
+        return document.getElementById("WeightInput").value;
+    }
+
+    function getAge() {
+        return document.getElementById("AgeInput").value;
+    }
+
+    function getActivityLevel() {
+        console.log(document.getElementById("activityLevelSelectBox").value)
+        return document.getElementById("activityLevelSelectBox").value;
+    }
+
+
+
+    function getGender() {
+        var radios = document.getElementsByName('gender');
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+            return radios[i].value;
+            }
+        }
+        return null; // If no radio button is checked
+    }
+
+    function calculateBMI() {
+        const height = getHeight();
+        const weight = getWeight();
+        if (!height || !weight) {
+            document.getElementById("alert").innerHTML = 'Please enter your height and weight';
+            return false
+        }
+
+        const bmr_flag = calculateBMR(height,weight);
+
+        if (!bmr_flag) return false;
+
+        const bmi = weight / (height ** 2)
+
+
+
+        document.getElementById("userHeight").innerHTML = `${height} cm`;
+        document.getElementById("userWeight").innerHTML = `${weight} kg`;
+        document.getElementById("bmi_calculation").innerHTML = parseFloat(bmi * 10000).toFixed(1);
+        document.getElementById("res_table").style.visibility="visible";
+        document.getElementById("alert").innerHTML='';
+        return true
+    }
+
+    function calculateBMR(height,weight) {
+        const age = getAge();
+        const gender = getGender();
+        if (!age) {
+            document.getElementById("alert").innerHTML = 'Please fill all fields';
+            return false
+        }
+        let bmr;
+
+        if (gender === "1"){
+            bmr = 88.362 + (13.397 * weight) + (4.799 * height) - ( 5.677 * age )
+        }
+        else{
+            bmr = 447.593 + (9.247 * weight) + (3.098 * height) - ( 4.330 * age )
+        }
+
+        const calorie_flag = calculateDailyIntakeCalorie(bmr);
+        if (!calorie_flag) return false;
+
+        document.getElementById("userGender").innerHTML =`${gender == 1 ? "Male" : "Female"}`;
+        document.getElementById("bmr_calculation").innerHTML =`${ parseFloat(bmr).toFixed(1) } Calories/day`;
+
+        return true
+    }
+
+    function calculateDailyIntakeCalorie(bmr){
+
+        const activityLevel = getActivityLevel()
+
+        if (activityLevel === "Activity level") {
+            document.getElementById("alert").innerHTML = 'Activity level is wrong';
+            return false
+        }
+
+        const levels = {"0":1.2, "1":1.37, "2":1.55, "3":1.725, "4":1.9}
+
+        const dailyIntakeCalorie = bmr * levels[activityLevel]
+
+        document.getElementById("daily_cal").innerHTML =`${dailyIntakeCalorie}`;
+        return true
+    }
+
+
+</script>

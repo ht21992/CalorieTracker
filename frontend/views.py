@@ -4,12 +4,40 @@ import requests
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
+import pickle
+import pandas as pd
+from .utils import convert_status_to_description
 
+
+MODEL_PICKLE_FILE = "BMI_model.pkl"
 
 @require_http_methods(["GET"])
 def index(request):
-    return render(request, "index.html")
+    return render(request, "index.html", context={"view_name":"calorie_tracker"})
 
+@require_http_methods(["GET"])
+def get_partial_view(request):
+    view_name = request.GET.get("view_name","calorie_tracker")
+
+
+    return render(request, f"{view_name}.html")
+
+@require_http_methods(["POST"])
+def predict_status(request):
+
+    height = request.POST.get("height","")
+    weight = request.POST.get("weight","")
+    gender = request.POST.get("gender",0)
+
+    with open(MODEL_PICKLE_FILE, 'rb') as file:
+        loaded_model=pickle.load(open(MODEL_PICKLE_FILE, 'rb'))
+
+    person = {'Gender': [gender], 'Height': [height], 'Weight': [weight]}
+
+    person_df = pd.DataFrame(person)
+    prediction = loaded_model.predict(person_df)
+    status_label = convert_status_to_description(prediction)
+    return HttpResponse(status_label)
 
 @require_http_methods(["POST"])
 def get_food_info(request):

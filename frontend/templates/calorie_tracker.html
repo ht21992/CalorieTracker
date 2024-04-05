@@ -1,0 +1,39 @@
+<h3 class="px-4 text-center mb-4">Calorie Tracker</h3>
+<form class="px-4" id="foodForm" hx-post="{% url 'get_food_info' %}" hx-target="#foodInfoContainer"
+    hx-trigger="submit[checkForm()]" hx-vals='js:{"query":getFoodInput()}'>
+    {%csrf_token%}
+    <div class="input-group input-group-lg ">
+        <input style="font-size: 12px" id="foodInput" type="text" name="query" class="form-control"
+            placeholder="search for calories in your food..." required aria-label="Type your message here..."
+            aria-describedby="sendButton">
+        <button style="font-size: 12px !important;max-width: 160;" class="btn btn-search" type="submit">Find
+            calories</button>
+    </div>
+</form>
+<div id="foodInfoContainer">
+
+    <!-- From Here -->
+
+    <!-- To Here -->
+
+</div>
+
+<script>
+    function getFoodInput() {
+        return document.getElementById("foodInput").value.trim();
+    }
+
+
+    function checkForm() {
+        const foodInput = document.getElementById('foodInput');
+
+        if (foodInput.value.trim() === "") {
+            document.getElementById("foodInfoContainer").innerHTML = "Food field is empty";
+            return false;
+        }
+
+        return true;
+
+    }
+
+</script>

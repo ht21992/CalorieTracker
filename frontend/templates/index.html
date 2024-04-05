@@ -1,73 +1,110 @@
-<!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<link href="{% static 'bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="stylesheet">
+<style>
 
-
-    <title>Calorie Tracker</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 text-center">
-                <img src="{% static 'images/logo.png' %}" width="200" height="200"
-                    class="img-responsive logo mb-5 mt-5" />
-                <form id="foodForm" hx-post="{% url 'get_food_info' %}" hx-target="#foodInfoContainer"
-                    hx-trigger="submit[checkForm()]" hx-vals='js:{"query":getFoodInput()}'>
-                    {%csrf_token%}
-                    <div class="input-group input-group-lg mb-5">
-                        <input id="foodInput" type="text" name="query" class="form-control"
-                            placeholder="search for calories in your food..." required
-                            aria-label="Type your message here..." aria-describedby="sendButton">
-                        <button class="btn btn-search " type="submit">Find calories</button>
-                    </div>
-                </form>
-                <div id="foodInfoContainer">
-
-                </div>
-
-            </div>
-
-        </div>
+</style>
+<div class="main-wrapper">
+  <div class="left-bar">
+    <div class="upper-part">
+      <div class="actions">
+        <div class="circle"></div>
+        <div class="circle-2"></div>
+      </div>
     </div>
+    <div class="left-content">
+
+      <ul class="action-list">
+
+        <li  class="item" hx-trigger="click" hx-get="{% url 'get_partial_view' %}" hx-vals='{"view_name":"calorie_tracker"}'
+          hx-target="#mainWrapper">
+          <svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1125.628 1125.628" xml:space="preserve">
+            <g>
+              <path d="M562.812,0.002C252.476,0.002,0,252.479,0,562.814s252.476,562.812,562.812,562.812
+              c310.34,0,562.817-252.476,562.817-562.812S873.152,0.002,562.812,0.002z M309.189,739.263l-68.974-101h-17.735v101h-70v-357h70
+              v203h15.889l57.901-93h77.963l-79.808,111.736l92.036,135.264H309.189z M468.184,672.88c7.299,13.589,20.325,20.382,38.317,20.382
+              c11.995,0,21.792-3.329,29.023-10.286c7.226-6.952,11.026-14.712,11.026-27.712h61.131l0.69,1.237
+              c0.612,25.224-8.88,46.258-28.489,63.246c-19.605,16.997-43.942,25.452-73.007,25.452c-37.218,0-65.962-11.781-86.11-35.309
+              c-20.144-23.529-30.283-53.763-30.283-90.671v-6.925c0-36.753,10.102-66.968,30.169-90.652
+              c20.071-23.68,48.745-35.524,85.958-35.524c30.76,0,55.57,8.766,74.412,26.297c18.833,17.531,27.954,41.73,27.342,70.334
+              l-0.453,2.516H546.55c0-14-3.54-24.775-10.611-33.312c-7.075-8.533-16.837-13.365-29.298-13.365
+              c-17.837,0-31.158,6.628-38.457,20.446c-7.308,13.818-11.703,31.349-11.703,53.151v6.911
+              C456.481,641.362,460.876,659.29,468.184,672.88z M793.142,739.263c-2.462-4-4.582-11.157-6.345-17.465
+              c-1.772-6.304-3.038-12.499-3.805-19.113c-6.925,12.15-16.033,22.354-27.338,30.348c-11.301,7.998-24.798,12.061-40.484,12.061
+              c-26.141,0-46.285-6.691-60.432-20.148c-14.151-13.457-21.222-31.78-21.222-54.998c0-24.456,9.414-43.221,28.256-56.683
+              c18.833-13.452,46.327-20.003,82.467-20.003h39.242v-20.18c0-11.995-3.974-21.3-10.282-27.914
+              c-6.303-6.609-16.019-9.917-28.32-9.917c-10.922,0-19.545,2.65-25.465,7.957c-5.92,5.303-8.982,12.648-8.982,22.026l-65.101-0.228
+              l-0.259-1.384c-1.073-21.066,8.063-39.251,27.44-54.553c19.377-15.302,44.822-22.953,76.349-22.953
+              c29.832,0,54.075,7.578,72.684,22.72c18.605,15.151,27.938,36.716,27.938,64.703v103.113c0,11.689,0.854,22.156,2.622,32.461
+              c1.768,10.3,4.55,21.149,8.396,30.149H793.142z M902.481,739.263v-357h70v357H902.481z" />
+              <path d="M711.712,640.846c-7.382,7.153-11.072,16.229-11.072,26.379c0,8.304,2.768,15.211,8.304,20.285
+              c5.536,5.075,13.069,7.717,22.606,7.717c11.84,0,23.195-2.865,32.422-8.707c9.227-5.847,14.509-12.558,19.509-20.246v-37.012
+              h-39.242C729.933,629.263,719.093,633.698,711.712,640.846z" />
+            </g>
+          </svg>
+          <span>Calorie Tracker</span>
+        </li>
+
+        <li class="item" hx-trigger="click" hx-get="{% url 'get_partial_view' %}" hx-vals='{"view_name":"bmi"}' hx-target="#mainWrapper">
+          <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 496 496" xml:space="preserve">
+            <g>
+              <g>
+                <g>
+                  <path d="M248,136c13.232,0,24-10.768,24-24c0-10.416-6.712-19.216-16-22.528V32h-16v57.472c-9.296,3.312-16,12.112-16,22.528
+				C224,125.232,234.768,136,248,136z M248,104c4.416,0,8,3.584,8,8s-3.584,8-8,8s-8-3.584-8-8S243.584,104,248,104z" />
+                  <path d="M448,248h-2.848l2.432-20.16c0.272-2.232,0.416-4.48,0.416-6.736V152c0-30.872-25.128-56-56-56h-33.28
+				C350.92,41.816,304.312,0,248,0S145.08,41.816,137.28,96H104c-30.872,0-56,25.128-56,56v69.104c0,2.256,0.144,4.512,0.408,6.736
+				l2.44,20.16H0v96h62.488l12.448,102.736C78.344,474.824,102.24,496,130.528,496h234.936c28.288,0,52.184-21.176,55.592-49.264
+				l2.76-22.736H448c26.472,0,48-21.528,48-48v-80C496,269.528,474.472,248,448,248z M248,16c52.936,0,96,43.064,96,96
+				c0,52.936-43.064,96-96,96c-52.936,0-96-43.064-96-96C152,59.064,195.064,16,248,16z M64,152c0-22.056,17.944-40,40-40h32
+				c0,61.76,50.24,112,112,112s112-50.24,112-112h32c22.056,0,40,17.944,40,40v69.104c0,1.6-0.096,3.208-0.296,4.816L429.032,248
+				H66.968l-2.68-22.096c-0.192-1.592-0.288-3.2-0.288-4.8V152z M405.168,444.816C402.744,464.872,385.672,480,365.472,480H130.528
+				c-20.2,0-37.272-15.128-39.704-35.184L78.608,344h338.784L405.168,444.816z M448,408h-22.24l7.76-64H448
+				c17.648,0,32,14.352,32,32S465.648,408,448,408z M480,340.248C471.496,332.64,460.28,328,448,328H16v-64h16v16h16v-16h16v16h16
+				v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16v16h16v-16h16
+				v16h16v-16h16v16h16v-16h16v24h16v-19.552c9.52,5.552,16,15.76,16,27.552V340.248z" />
+                </g>
+              </g>
+            </g>
+          </svg>
+          <span>BMI Calculator</span>
+        </li>
+
+      </ul>
 
 
 
-    <!-- HTMX -->
-    <script src="{% static  'js/htmx.js' %}"></script>
-    <script src="{% static  'js/chart.min.js' %}"></script>
+
+    </div>
+  </div>
+  <div class="page-content">
+
+    <div class="middle-container-wrapper" id="mainWrapper">
+
+      {% with template_name=view_name|stringformat:"s" %}
+      {% include ""|add:view_name|add:".html" %}
+      {% endwith %}
+
+    </div>
+  </div>
+
+</div>
 
 
-    <script>
-
-        document.body.addEventListener("htmx:configRequest", (event) => {
-            event.detail.headers["X-CSRFTOKEN"] = "{{csrf_token}}";
-        });
-
-        function getFoodInput() {
-            return document.getElementById("foodInput").value.trim();
-        }
+<!-- HTMX -->
+<script src="{% static  'js/htmx.js' %}"></script>
+<script src="{% static  'js/chart.min.js' %}"></script>
 
 
-        function checkForm() {
-            const foodInput = document.getElementById('foodInput');
+<script>
 
-            if (foodInput.value.trim() === "") {
-                document.getElementById("foodInfoContainer").innerHTML = "Food field is empty";
-                return false;
-            }
+  document.body.addEventListener("htmx:configRequest", (event) => {
+    event.detail.headers["X-CSRFTOKEN"] = "{{csrf_token}}";
+  });
 
-            return true;
 
-        }
-    </script>
-</body>
-
-</html>
+</script>
