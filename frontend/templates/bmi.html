@@ -13,7 +13,7 @@
             </div>
 
             <select class="form-select my-2" id="activityLevelSelectBox">
-                <option disabled selected val="-1" >Activity level</option>
+                <option disabled selected value="" >Activity level</option>
                 <option value="0">little or no exercise</option>
                 <option value="1">Lightly active (light exercise/sports 1-2 days/week)</option>
                 <option value="2">Moderately active (moderate exercise/sports 3-5 days/week)</option>
@@ -48,7 +48,7 @@
                     <span class="input-group-text bg-light" style="border: none;" id="inputAgePrepend">year</span>
                 </div>
             </div>
-            <button style="font-size: 12px !important;max-width: 160;max-height: 50px;float: right;" class="btn btn-outline-success my-3"
+            <button style="font-size: 12px !important;max-width: 160;max-height: 50px;float: right;" class="btn btn-outline-search my-3"
             type="button" hx-trigger="click[calculateBMI()]" hx-target="#status_prediction"
             hx-post="{% url 'predict_status' %}" hx-vals='js:{"height":getHeight(), "weight":getWeight(),"gender":getGender()}'>Calculate
             BMI</button>
@@ -145,7 +145,6 @@
     }
 
     function getActivityLevel() {
-        console.log(document.getElementById("activityLevelSelectBox").value)
         return document.getElementById("activityLevelSelectBox").value;
     }
 
@@ -174,8 +173,6 @@
         if (!bmr_flag) return false;
 
         const bmi = weight / (height ** 2)
-
-
 
         document.getElementById("userHeight").innerHTML = `${height} cm`;
         document.getElementById("userWeight").innerHTML = `${weight} kg`;
@@ -214,7 +211,7 @@
 
         const activityLevel = getActivityLevel()
 
-        if (activityLevel === "Activity level") {
+        if (!activityLevel) {
             document.getElementById("alert").innerHTML = 'Activity level is wrong';
             return false
         }
@@ -223,7 +220,7 @@
 
         const dailyIntakeCalorie = bmr * levels[activityLevel]
 
-        document.getElementById("daily_cal").innerHTML =`${dailyIntakeCalorie}`;
+        document.getElementById("daily_cal").innerHTML =`${dailyIntakeCalorie.toFixed(2)}`;
         return true
     }
 

@@ -1,0 +1,40 @@
+{% load static %}
+<h3 class="px-4 text-center mb-4">Recipe Finder</h3>
+<form class="px-4" id="recipeForm" hx-post="{% url 'recipe_finder' %}" hx-target="#recipeInfoContainer"
+    hx-trigger="submit[checkForm()]" hx-vals='js:{"query":getRecipeInput()}'>
+    {%csrf_token%}
+    <div class="input-group input-group-lg ">
+        <input style="font-size: 12px" id="recipeInput" type="text" name="query" class="form-control"
+            placeholder="search for recipe name..." required>
+        <button style="font-size: 12px !important;max-width: 160;" class="btn btn-outline-search" type="submit">Find
+            Recipe</button>
+    </div>
+</form>
+<div id="recipeInfoContainer">
+
+    <!-- From Here -->
+
+    <!-- To Here -->
+
+</div>
+
+<script>
+    function getRecipeInput() {
+        return document.getElementById("recipeInput").value.trim();
+    }
+
+
+    function checkForm() {
+        const recipeInput = document.getElementById('recipeInput');
+
+        if (recipeInput.value.trim() === "") {
+            document.getElementById("recipeInfoContainer").innerHTML = "Food field is empty";
+            return false;
+        }
+
+        document.getElementById("recipeInfoContainer").innerHTML = `<div class="d-flex h-50 justify-content-center align-items-center"><img src='{% static "images/loading.gif"  %}' width="200" height="100" /> <div/>`
+        return true;
+
+    }
+
+</script>

@@ -1,0 +1,16 @@
+{% for excersice in resp %}
+
+<blockquote class="blockquote ">
+    <h4 class="mt-2" style="text-decoration: underline;">{{excersice.name}}</h4>
+    <p><small><b>type:</b> {{excersice.type}}</small>&nbsp;&nbsp;<small><b>muscle: </b>{{excersice.muscle}}</small>&nbsp;&nbsp;
+        <small><b>difficulty: </b>{{excersice.difficulty}}</small>&nbsp;&nbsp;<small><b>equipment: </b>{{excersice.equipment}}</small></p>
+        <br/>
+    <p>{% if excersice.instructions %} {{excersice.instructions}} {% else %} instructions has not been provided yet {% endif %}</p>
+    <p  class="my-3 thick-end"></p>
+</blockquote>
+
+{% empty %}
+
+Nothing Found
+
+{% endfor %}

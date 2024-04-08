@@ -1,0 +1,17 @@
+{% for recipe in resp %}
+
+<blockquote class="blockquote ">
+    <h4 class="mt-2" style="text-decoration: underline;">{{recipe.title}}</h4>
+    <p><small><b>servings:</b> {{recipe.servings}}</small></p>
+    <br/>
+    <p><small><b>ingredients:</b> {{recipe.ingredients}}</small></p>
+    <br/>
+    <p>{% if recipe.instructions %} {{recipe.instructions}} {% else %} instructions has not been provided yet {% endif %}</p>
+    <p  class="my-3 thick-end"></p>
+</blockquote>
+
+{% empty %}
+
+Nothing Found
+
+{% endfor %}

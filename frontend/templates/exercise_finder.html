@@ -1,0 +1,108 @@
+{% load static %}
+<div class="container">
+    <h3 class="px-4 text-center">Excersice Finder</h3>
+    <div class="row">
+        <div class="col-lg-6 col-xs-12">
+            <select class="form-select my-2" id="typeSelectBox">
+                <option disabled selected value="">Choose target muscle group </option>
+                <option value="cardio">cardio</option>
+                <option value="olympic_weightlifting">olympic weightlifting</option>
+                <option value="plyometrics">plyometrics</option>
+                <option value="powerlifting">powerlifting</option>
+                <option value="strength">strength</option>
+                <option value="stretching">stretching</option>
+                <option value="strongman">strongman</option>
+            </select>
+
+
+            <div class="form-check form-check-inline my-4">
+                <input class="form-check-input" type="radio" name="difficulty" id="beginner" value="beginner" checked>
+                <label class="form-check-label" for="beginner">Beginner</label>
+            </div>
+            <div class="form-check form-check-inline my-4">
+                <input class="form-check-input" type="radio" name="difficulty" id="intermediate" value="intermediate" >
+                <label class="form-check-label" for="intermediate">Intermediate</label>
+            </div>
+            <div class="form-check form-check-inline my-4">
+                <input class="form-check-input" type="radio" name="difficulty" id="expert" value="expert" >
+                <label class="form-check-label" for="expert">Expert</label>
+            </div>
+
+
+        </div>
+
+        <div class="col-lg-6 col-xs-12">
+            <select class="form-select my-2" id="muscleSelectBox">
+                <option disabled selected value="">Choose excersice type </option>
+                <option value="abdominals">abdominals</option>
+                <option value="abductors">abductors</option>
+                <option value="adductors">adductors</option>
+                <option value="biceps">biceps</option>
+                <option value="calves">calves</option>
+                <option value="chest">chest</option>
+                <option value="forearms">forearms</option>
+                <option value="glutes">glutes</option>
+                <option value="hamstrings">hamstrings</option>
+                <option value="lats">lats</option>
+                <option value="lower_back">lower back</option>
+                <option value="middle_back">middle back</option>
+                <option value="neck">neck</option>
+                <option value="quadriceps">quadriceps</option>
+                <option value="traps">traps</option>
+                <option value="triceps">triceps</option>
+            </select>
+
+
+            <button style="font-size: 12px !important;max-width: 160;max-height: 50px;float: right;" class="btn btn-outline-search my-3"
+            type="button" hx-trigger="click[checkInputs()]" hx-target="#excersiceListContainer"
+            hx-post="{% url 'find_excersice' %}" hx-vals='js:{"exc_type":getExcType(), "muscle":getMuscle(),"difficulty":getDifficulty()}'>Find Excersice</button>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="container my-3">
+    <h5 id="alert" class="text-center text-danger"></h5>
+    <div id="excersiceListContainer">
+
+    </div>
+</div>
+
+<script>
+
+function getExcType() {
+        return document.getElementById("typeSelectBox").value;
+    }
+
+    function getMuscle() {
+        return document.getElementById("muscleSelectBox").value;
+    }
+
+    function getDifficulty() {
+        var radios = document.getElementsByName('difficulty');
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+            return radios[i].value;
+            }
+        }
+        return null; // If no radio button is checked
+    }
+
+    function checkInputs(){
+
+        const excType = getExcType();
+        const muscle = getMuscle();
+        const difficulty = getDifficulty();
+        if (!excType || !muscle || !difficulty) {
+            document.getElementById("alert").innerHTML = 'Invalid Parameters';
+            return false
+        }
+
+        document.getElementById("alert").innerHTML = '';
+        document.getElementById("excersiceListContainer").innerHTML = `<div class="d-flex h-50 justify-content-center align-items-center"><img src='{% static "images/loading.gif"  %}' width="200" height="100" /> <div/>`
+        return true
+    }
+
+</script>

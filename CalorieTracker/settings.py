@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 load_dotenv(os.path.join('./', '.env'))
 
 DJ_SE=os.getenv("SECRET_KEY")
-FOOD_API_KEY = os.getenv("FOOD_API_KEY")
+API_KEY = os.getenv("API_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
